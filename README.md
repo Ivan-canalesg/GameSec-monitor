@@ -1,38 +1,33 @@
-#GameSec monitor.
+# GameSec Monitor
 
-Descripcion:
-Es un programa hecho en python para el analisis de sesiones de partidas multijugador. Evalua el rendimiento
-de cada servidor de forma separada, asì como los reportes de jugadores y los intentos de inicio de sesion de estos.
+## Descripción
 
-#Funciones:
+Programa hecho en Python para el análisis de sesiones de partidas multijugador. Evalúa el rendimiento de cada servidor de forma separada, así como los reportes de jugadores y sus intentos de inicio de sesión.
 
--Carga y validación de datos desde un archivo CSV.
+## Funciones
 
--Cálculo de estadísticas globales.
+- Carga y validación de datos desde un archivo CSV.
+- Cálculo de estadísticas globales.
+- Análisis del ping y los FPS promedio por servidor.
+- Clasificación de sesiones en normales, sospechosas y críticas.
+- Exportación de un informe consolidado en formato TXT.
 
--Análisis del ping y los FPS promedio por servidor.
+## Archivos principales
 
--Clasificación de sesiones en normales, sospechosas y críticas.
+| Archivo | Descripción |
+|---|---|
+| `main.py` | Menú principal e interacción con el usuario |
+| `carga.py` | Carga y validación del CSV |
+| `procesamiento.py` | Estadísticas y análisis de seguridad |
+| `exportacion.py` | Generación del informe de texto |
+| `gamesec_logs.csv` | Dataset de telemetría |
 
--Exportación de un informe consolidado en formato TXT.
+## Requisitos
 
-#Archivos principales:
+- Python 3.10 o superior
 
--main.py: menú principal e interacción con el usuario.
+## Ejecución
 
--carga.py: carga y validación del CSV.
-
--procesamiento.py: estadísticas y análisis de seguridad.
-
--exportacion.py: generación del informe de texto.
-
--gamesec_logs.csv: dataset de telemetría.
-
-#Requisitos:
-
-Python 3.10+
-
-
-#Ejecucion:
-
+```bash
 python3 main.py
+```
