@@ -1,10 +1,10 @@
-GameSec monitor.
+#GameSec monitor.
 
 Descripcion:
 Es un programa hecho en python para el analisis de sesiones de partidas multijugador. Evalua el rendimiento
 de cada servidor de forma separada, asì como los reportes de jugadores y los intentos de inicio de sesion de estos.
 
-Funciones:
+#Funciones:
 
 -Carga y validación de datos desde un archivo CSV.
 
@@ -16,7 +16,7 @@ Funciones:
 
 -Exportación de un informe consolidado en formato TXT.
 
-Archivos principales:
+#Archivos principales:
 
 -main.py: menú principal e interacción con el usuario.
 
@@ -28,11 +28,11 @@ Archivos principales:
 
 -gamesec_logs.csv: dataset de telemetría.
 
-Requisitos:
+#Requisitos:
 
 Python 3.10+
 
 
-Ejecucion:
+#Ejecucion:
 
 python3 main.py
