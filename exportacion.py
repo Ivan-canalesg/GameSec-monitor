@@ -50,8 +50,11 @@ def exportar_reporte(sesiones: list[dict], ruta: str = "reporte_gamesec.txt") ->
         "3. AUDITORÍA DE SEGURIDAD",
         "-" * 50,
         f"Sesiones NORMALES:    {resumen['NORMAL']}",
+        f"({resumen['NORMAL'] / estadisticas['total_sesiones'] * 100:.2f} %)",
         f"Sesiones SOSPECHOSAS: {resumen['SOSPECHOSO']}",
+        f"({resumen['SOSPECHOSO'] / estadisticas['total_sesiones'] * 100:.2f} %)",
         f"Sesiones CRÍTICAS:    {resumen['CRITICO']}",
+        f"({resumen['CRITICO'] / estadisticas['total_sesiones'] * 100:.2f} %)",
         "",
         "Detalle de sesiones críticas:",
     ]
