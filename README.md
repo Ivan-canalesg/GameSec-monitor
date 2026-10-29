@@ -1,8 +1,17 @@
 # GameSec Monitor
 
+**Trabajo Práctico (TP) – Proyecto desarrollado en Python**
+
+## Integrantes
+
+- Iván Gustavo Canales
+- Kiano kapriel marchant
+- Facundo Ezequiel Sanabria
+- Alejandro Ariel Barquinero
+
 ## Descripción
 
-Programa hecho en Python para el análisis de sesiones de partidas multijugador. Evalúa el rendimiento de cada servidor de forma separada, así como los reportes de jugadores y sus intentos de inicio de sesión.
+Programa desarrollado en Python para el análisis de sesiones de partidas multijugador. Evalúa el rendimiento de cada servidor de forma separada, así como los reportes de jugadores y sus intentos de inicio de sesión.
 
 ## Funciones
 
