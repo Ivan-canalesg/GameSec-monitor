@@ -4,10 +4,10 @@
 
 ## Integrantes
 
-- Iván Gustavo Canales
-- Kiano kapriel marchant
-- Facundo Ezequiel Sanabria
-- Alejandro Ariel Barquinero
+- Iván Gustavo Canales - DNI: 39849090 - Ciberseguridad
+- Kiano kapriel marchant - DNI: 47734720 - Ciberseguridad 
+- Facundo Ezequiel Sanabria - DNI: 41572847 - Tecnicatura en videojuegos
+- Alejandro Ariel Barquinero - DNI: 30245471 - Tecnicatura en videojuegos 
 
 ## Descripción
 
