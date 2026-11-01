@@ -10,9 +10,131 @@ from carga import (
     cargar_telemetria
 )
 
-from exportacion import (
-        exportar_reporte
-)
+from datetime import datetime
+
+
+ANCHO_REPORTE = 60
+
+
+def exportar_reporte(sesiones: list[dict], conclusiones: str = "",
+                     ruta: str = "reporte_gamesec.txt") -> str:
+    """
+    Genera el reporte de auditoría y telemetría en un archivo de texto
+    y devuelve la ruta. Lanza ValueError si no hay sesiones y OSError
+    si no se puede escribir.
+    """
+    if not sesiones:
+        raise ValueError("No hay sesiones para exportar.")
+
+    estadisticas = calcular_estadisticas_globales(sesiones)
+    rendimiento = analizar_por_servidor(sesiones)
+    resumen, criticas = clasificar_incidentes(sesiones)
+
+    total = estadisticas['total_sesiones']
+    fecha = datetime.now().strftime("%d/%m/%Y")
+    linea = "=" * ANCHO_REPORTE
+    guiones = "-" * ANCHO_REPORTE
+
+    # Encabezado
+    lineas = [
+        linea,
+        "REPORTE DE AUDITORIA Y TELEMETRIA      GAMESEC".center(ANCHO_REPORTE).rstrip(),
+        linea,
+        f"Fecha de generacion: {fecha}",
+        "",
+    ]
+
+    # [1] Resumen global
+    lineas += [
+        "[1] RESUMEN GLOBAL OPERATIVO",
+        guiones,
+        f"Total de sesiones procesadas: {total}",
+        f"Ping promedio global: {estadisticas['ping_promedio']:.2f} ms",
+        f"Duracion media de partida: {estadisticas['duracion_promedio']:.2f} min",
+        f"Partidas de alta competencia (Ranked/Torneo): "
+        f"{estadisticas['porcentaje_competitivas']:.2f}%",
+        "",
+    ]
+
+    # [2] Rendimiento por servidor
+    fila = "{:<17} | {:<8} | {:<13} | {}"
+    lineas += [
+        "[2] RENDIMIENTO REGIONAL POR SERVIDOR",
+        guiones,
+        fila.format("Servidor", "Sesiones", "Ping Promedio", "FPS Promedio"),
+        guiones,
+    ]
+    for servidor, datos in rendimiento.items():
+        lineas.append(
+            fila.format(
+                servidor,
+                datos['cantidad'],
+                f"{datos['ping_promedio']:.2f} ms",
+                f"{datos['fps_promedio']:.2f} fps",
+            )
+        )
+    lineas.append("")
+
+    # [3] Auditoría de seguridad
+    def fila_estado(etiqueta, clave):
+        cantidad = resumen[clave]
+        porcentaje = cantidad / total * 100
+        return (f"      {etiqueta:<13}{cantidad:>3} sesiones "
+                f"({porcentaje:>5.2f}%)")
+
+    lineas += [
+        "[3] AUDITORIA DE SEGURIDAD E INCIDENTES",
+        guiones,
+        "Distribucion de estados de seguridad:",
+        fila_estado("Normales:", "NORMAL"),
+        fila_estado("Sospechosos:", "SOSPECHOSO"),
+        fila_estado("Criticos:", "CRITICO"),
+        "",
+        "Detalle de Sesiones Criticas Detectadas:",
+    ]
+
+    if criticas:
+        for incidente in criticas:
+            lineas.append(
+                f"  [!] Sesion #{incidente['id_sesion']}  | "
+                f"Jugador: {incidente['jugador_id']} | "
+                f"Servidor: {incidente['servidor']}"
+            )
+            lineas.append(f"      Motivo: {incidente['motivo']}")
+    else:
+        lineas.append("  (ninguna)")
+    lineas.append("")
+
+    # [4] Conclusiones técnicas
+    lineas += [
+        "[4] CONCLUSIONES TECNICAS DEL EQUIPO",
+        guiones,
+    ]
+    if conclusiones.strip():
+        lineas.extend(conclusiones.strip().splitlines())
+    else:
+        lineas.append("(sin conclusiones registradas)")
+
+    lineas += ["", linea]
+
+    with open(ruta, "w", encoding="utf-8") as archivo:
+        archivo.write("\n".join(lineas) + "\n")
+
+    return ruta
+
+def pedir_conclusiones():
+    """Pide las conclusiones técnicas por consola; termina con una línea vacía."""
+    print("Escriba las conclusiones técnicas del equipo.")
+    print("Presione ENTER en una línea vacía para terminar.\n")
+    lineas = []
+    while True:
+        texto = input("> ").strip()
+        if not texto:
+            break
+        lineas.append(texto)
+    return "\n".join(lineas)                      
+
+
 
 
 
@@ -116,7 +238,8 @@ def main():
                 print("Primero debe cargar el dataset con la opción 1.")
             else:
                 try:
-                    ruta = exportar_reporte(sesiones)
+                    conclusiones = pedir_conclusiones()
+                    ruta = exportar_reporte(sesiones, conclusiones)
                     print(f"Reporte exportado correctamente en: {ruta}")
                 except OSError as error:
                     print(f"Error al guardar el reporte: {error}")
